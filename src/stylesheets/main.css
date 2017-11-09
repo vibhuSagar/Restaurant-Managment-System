@@ -1,0 +1,118 @@
+html,body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url('https://static.pexels.com/photos/236798/pexels-photo-236798.jpeg');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-attachment: fixed;
+}
+
+div.head{
+  font-weight: bold;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+}
+
+.head header h3{
+  margin-top: 10px;
+  margin-bottom: 10px !important;
+  color: black;
+  font-size: 3em;
+}
+
+
+.form-field{
+    width: 100%;
+    padding: 10px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.15em;
+    border: 1.5px solid #000;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid rgb(0,0,0);
+    font-size: 1.15em;
+}
+
+div.login{
+  margin: 20px auto;
+  width: 400px;
+  background: rgba(255,255,255,0.65);
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2), -5px -5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login h5{
+  text-align: center;
+  font-size: 2em;
+}
+
+#main{
+  position: absolute;
+  height: 50px;
+  bottom: 10%;
+  right: 0%;
+  width: 40%;
+  background-color: black;
+  color: white;
+  padding: 20px 20px;
+  margin: 10px 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.text:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#main-container{
+  padding: 20px;
+}
+
+.btn{
+  font-size: 1.2em;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: black;
+}
+
+.box-wraper{
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: 6px;
+}
+
+.box-head{
+  padding: 12px;
+}
+
+.box-body{
+
+}
+
+
+#footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:rgba(255, 255, 255, 0.65);;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2em;
+}

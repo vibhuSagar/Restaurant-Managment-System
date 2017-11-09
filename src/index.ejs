@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+<head> <title> Restaurant Management System</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="stylesheets/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <%- include partials/header.ejs %>
+
+	<div class ="login">
+		<h5>Login</h5>
+
+    <% if(msg){ %>
+
+      <div class="alert">
+        <h5><%= msg %></h5>
+      </div>
+
+    <%}%>
+
+
+		<form action="/login" method="POST">
+			<input class="form-field" type="text" name="username" value="ADMIN" readonly><br>
+			<input class="form-field" type="password" name="password" placeholder="Enter Password"><br>
+			<input type="submit" id="br"><br>
+
+			<p class="text"> Forgot Password?</p>
+		</form>
+	</div>
+
+  <%- include partials/footer.ejs %>
+
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>

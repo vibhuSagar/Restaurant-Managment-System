@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  Restaurant Management System </title>
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="stylesheets/main.css" rel="stylesheet">
+</head>
+<body>
+
+  <%- include partials/header.ejs %>
+
+  <div class="container-fluid" id="main-container">
+
+    <p class="text-center">
+      <button class="btn btn-success" data-toggle="modal" data-target="#myModal">
+        <i class="fa fa-plus"></i>  Add New Order</button>
+    </p>
+
+    <!-- <Modal> -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-head">
+            <h4 class="text-center modal-title">Customer Details</h4>
+          </div>
+
+          <div class="modal-body">
+            <form action="" method="POST">
+              <input type="text" class="form-field" placeholder="Customer Name" name="customer">
+              <input type="text" class="form-field" placeholder="Address" name="address">
+              <input type="number" class="form-field" placeholder="Phone Number" name="phone">
+              <input type="submit" value="View Menu">
+
+            </form>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- </Modal>-->
+
+    <div class="col-xs-12 col-md-4 col-sm-6">
+      <div class="box-wraper">
+        <div class="box-head">
+          <h5 class="text-center">Ongoing Orders</h5>
+        </div>
+        <div class="box-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include partials/footer.ejs %>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
