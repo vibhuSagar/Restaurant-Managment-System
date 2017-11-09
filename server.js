@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 
 //DATABASE CONNECTION CONFIG
-var vibhu = mysql.createConnection({
+/*var vibhu = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'vs@96',
@@ -18,7 +18,7 @@ vibhu.connect(function(err){
   else {
     console.log("DATABASE CONNECTED");
   }
-});
+});*/
 
 //App Initialization
 var app = express();
