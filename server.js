@@ -5,11 +5,11 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 
 //DATABASE CONNECTION CONFIG
-/*var vibhu = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'vs@96',
-  database: 'college'
+var vibhu = mysql.createConnection({
+  host: '139.59.66.232',
+  user: 'harsh',
+  password: 'bjn721',
+  database: 'vibhu'
 })
 
 vibhu.connect(function(err){
@@ -18,7 +18,7 @@ vibhu.connect(function(err){
   else {
     console.log("DATABASE CONNECTED");
   }
-});*/
+});
 
 var port = process.env.PORT || 3000
 
