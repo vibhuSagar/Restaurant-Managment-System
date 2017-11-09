@@ -20,6 +20,8 @@ vibhu.connect(function(err){
   }
 });*/
 
+var port = process.env.PORT || 3000
+
 //App Initialization
 var app = express();
 
@@ -66,6 +68,6 @@ app.post('/login', function(req, res){
 
 
 //Listen to port 3000
-app.listen(3000, function(){
-  console.log("Server is LIVE at port 3000");
+app.listen(port, function(){
+  console.log("Server is LIVE at port "+port);
 });
