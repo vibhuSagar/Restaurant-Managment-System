@@ -98,7 +98,27 @@
           <h5 class="text-center">Employee Details</h5>
         </div>
         <div class="box-body">
+          <table class="table table-hover">
+            <tr>
+              <th>Eid</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Salary</th>
+              <th>Gender</th>
+            </tr>
 
+            <% for(var i=0;i<emp.length;i++) {%>
+              <tr>
+                <td> <%= emp[i].eid %></td>
+                <td> <%= emp[i].name %></td>
+                <td> <%= emp[i].address %></td>
+                <td> <%= emp[i].phone %></td>
+                <td> <%= emp[i].salary %></td>
+                <td> <%= emp[i].gender %></td>
+              </tr>
+            <%}%>
+          </table>
         </div>
       </div>
     </div>

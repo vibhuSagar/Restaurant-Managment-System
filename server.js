@@ -43,8 +43,19 @@ app.get('/', function(req, res){
 });
 
 app.get('/home', function(req, res){
-  
-  res.render('home.ejs');
+
+  var sql = 'select * from emp';
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      console.log(err)
+    else {
+      console.log(success)
+
+      res.render('home.ejs', {emp: success})
+
+    }
+  })
 })
 
 //Menu Route
