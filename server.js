@@ -3,13 +3,16 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var controller = require('./api/controllers/mainController');
+
 
 //DATABASE CONNECTION CONFIG
 var vibhu = mysql.createConnection({
   host: '139.59.66.232',
   user: 'harsh',
   password: 'bjn721',
-  database: 'vibhu'
+  database: 'vibhu',
+  multipleStatements: true
 })
 
 vibhu.connect(function(err){
@@ -44,23 +47,57 @@ app.get('/', function(req, res){
 
 app.get('/home', function(req, res){
 
-  var sql = 'select * from emp';
+  var sql = 'select * from emp;';
+  sql += 'select * from customer;';
 
   vibhu.query(sql, (err, success) => {
     if(err)
       console.log(err)
     else {
-      console.log(success)
 
-      res.render('home.ejs', {emp: success})
+      console.log(success[0])
+      console.log(success[1])
 
+        res.render('home.ejs',
+        {
+          emp: success[0],
+          customer: success[1]
+        })
     }
   })
 })
 
 //Menu Route
 app.get('/menu', function(req, res){
-  res.send("This is Menu page");
+
+  var sql = 'select * from menu';
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      console.log(err)
+    else{
+      console.log(success);
+      res.render("menu.ejs", {menu: controller.groupData(success)});
+    }
+  })
+
+})
+
+//add new menu Item
+app.post('/menu', (req, res) => {
+  var item = req.body.item;
+  var price = req.body.price;
+  var type = req.body.type;
+
+  var sql = `insert into menu(name, price, type) values( '${item}', ${price}, '${type}')`;
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      res.send(err)
+    else {
+      res.redirect('/menu')
+    }
+  })
 })
 
 app.post('/login', function(req, res){

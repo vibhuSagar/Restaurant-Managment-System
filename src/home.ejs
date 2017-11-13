@@ -18,6 +18,9 @@
     <p class="text-center">
       <button class="btn btn-success" data-toggle="modal" data-target="#myModal">
         <i class="fa fa-plus"></i>  Add New Order</button>
+
+			<button class="btn btn-success" onclick="navigateTo('/menu')">
+	       <i class="fa fa-eye"></i>  View Menu</button>
     </p>
 
     <!-- <Modal> -->
@@ -71,14 +74,7 @@
     </div>
 
     <div class="col-xs-12 col-md-4 col-sm-6">
-      <div class="box-wraper">
-        <div class="box-head">
-          <h5 class="text-center">Menu</h5>
-        </div>
-        <div class="box-body">
-
-        </div>
-      </div>
+      
     </div>
 
     <div class="col-xs-12 col-md-4 col-sm-6">
@@ -87,7 +83,26 @@
           <h5 class="text-center">Customer Details</h5>
         </div>
         <div class="box-body">
+          <table class="table table-hover">
+            <tr>
+              <th>Cid</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+            </tr>
 
+            <% for(var i=0;i<customer.length;i++){%>
+              <tr>
+                <td><%= customer[i].cid %></td>
+                <td><%= customer[i].name %></td>
+                <td><%= customer[i].address %></td>
+                <td><%= customer[i].phone %></td>
+              </tr>
+
+
+
+            <%}%>
+          </table>
         </div>
       </div>
     </div>
@@ -132,5 +147,12 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+
+		function navigateTo(){
+			window.location.href = '/menu';
+		}
+
+	</script>
 </body>
 </html>

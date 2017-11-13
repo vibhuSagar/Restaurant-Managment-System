@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+<head> <title> Restaurant Management System</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="stylesheets/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <%- include partials/header.ejs %>
+
+  <div class="col-md-2 col-sm-1"></div>
+  <div class="col-md-8 col-sm-10" style="margin-top: 20px; margin-bottom: 40px;">
+    <div class="box-wraper">
+      <div class="box-head">
+        <button class="btn btn-success" id="addBtn" data-toggle="modal" data-target="#menuModal">
+          <i class="fa fa-plus"></i>  Add New Item
+        </button>
+        <h2 class="text-center">Menu</h2>
+      </div>
+      <div class="box-body" id="menubox">
+        <% for( item in menu){ %>
+          <h3 class="text-center"><%= item %></h3>
+          <table class="table table-hover">
+            <tr>
+              <th class="text-center">iid</th>
+              <th class="text-center">name</th>
+              <th class="text-center">price</th>
+            </tr>
+            <% for(var i=0;i < menu[item].length;i++) { %>
+              <tr>
+                <td class="text-center"><%= menu[item][i].iid %></td>
+                <td class="text-center"><%= menu[item][i].name %></td>
+                <td class="text-center"><%= menu[item][i].price %></td>
+              </tr>
+            <%}%>
+          </table>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+
+      <!-- <Modal> -->
+      <div class="modal fade" id="menuModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-head">
+              <h2 class="text-center modal-title">New Item</h2>
+            </div>
+
+            <div class="modal-body">
+              <form action="/menu" method="POST">
+                <input type="text" class="form-field" placeholder="Item Name" name="item">
+                <input type="number" class="form-field" placeholder="Price" name="price">
+                <i class="fa fa-caret-down"></i>
+                <select class="form-field" name="type">
+                  <option value="Indian Snacks">Indian Snacks</option>
+                  <option value="Main Course">Main Course</option>
+                  <option value="Beverages">Beverages</option>
+                  <option value="Deserts">Deserts</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="Continetal">Continental</option>
+                </select>
+                <input type="submit" value="ADD">
+
+              </form>
+
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- </Modal>-->
+
+
+
+
+  <%- include partials/footer.ejs %>
+
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>
