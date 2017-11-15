@@ -153,6 +153,10 @@ select{
     padding-bottom: 10px;
 }
 
+.added{
+  color: green !important;
+}
+
 
 #footer{
   position: fixed;

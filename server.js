@@ -147,6 +147,23 @@ app.post('/customer', (req, res) => {
   })
 })
 
+app.get('/view-menu', (req, res) => {
+
+  var customer = req.query.customer;
+  //console.log(customer);
+  var sql = 'select * from menu';
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      console.log(err)
+    else{
+      //console.log(success);
+
+      res.render("viewMenu.ejs", {menu: controller.groupData(success), customer:customer});
+    }
+  })
+})
+
 /* Routes End */
 
 
