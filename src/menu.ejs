@@ -34,9 +34,10 @@
             </tr>
             <% for(var i=0;i < menu[item].length;i++) { %>
               <tr>
-                <td class="text-center"><%= menu[item][i].iid %></td>
+                <td class="text-center"><%= i+1 %></td>
                 <td class="text-center"><%= menu[item][i].name %></td>
                 <td class="text-center"><%= menu[item][i].price %></td>
+                <td> <i class="fa fa-trash" style="color: red;font-size:22px;cursor:pointer"></i></td>
               </tr>
             <%}%>
           </table>
@@ -61,7 +62,11 @@
                 <i class="fa fa-caret-down"></i>
                 <select class="form-field" name="type">
                   <option value="Indian Snacks">Indian Snacks</option>
+                  <option value="Soups">Soups</option>
+                  <option value="Starters">Starters</option>
                   <option value="Main Course">Main Course</option>
+                  <option value="Breads">Breads</option>
+                  <option value="Salads">Salads</option>
                   <option value="Beverages">Beverages</option>
                   <option value="Deserts">Deserts</option>
                   <option value="Chinese">Chinese</option>
@@ -92,6 +97,25 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+
+  $(document).ready(function(){
+
+    $('.fa-trash').click(function(){
+
+      var siblings = $(this).parent().siblings()
+
+      var item = $(siblings[1]).text()
+
+      $.post('/delete-item', {itemName: item}, function(result){
+        console.log(result)
+        window.location.href=result
+      })
+    })
+
+  })
+
+  </script>
 </body>
 
 </html>

@@ -55,8 +55,8 @@ app.get('/home', function(req, res){
       console.log(err)
     else {
 
-      console.log(success[0])
-      console.log(success[1])
+      //console.log(success[0])
+      //console.log(success[1])
 
         res.render('home.ejs',
         {
@@ -76,7 +76,7 @@ app.get('/menu', function(req, res){
     if(err)
       console.log(err)
     else{
-      console.log(success);
+      //console.log(success);
       res.render("menu.ejs", {menu: controller.groupData(success)});
     }
   })
@@ -111,7 +111,41 @@ app.post('/login', function(req, res){
   }
 })
 
+app.post('/delete-item', (req, res) => {
+  var item = req.body.itemName;
 
+  var sql = `delete from menu where name='${item}'`;
+
+  vibhu.query(sql, function(err, succcess){
+    if(err){
+      console.log(err)
+      res.send(err)
+    }
+    else {
+      console.log("Deleted")
+      res.send('/menu');
+    }
+  })
+})
+
+app.post('/customer', (req, res) => {
+  var name = req.body.customer;
+  var address = req.body.address;
+  var phone = req.body.phone;
+
+  var sql = `insert into customer(name, address, phone) values('${name}', '${address}', '${phone}')`
+
+  vibhu.query(sql, function(err, success){
+    if(err){
+      console.log(err)
+
+    }else{
+      console.log("Added Customer");
+
+      res.redirect('/home')
+    }
+  })
+})
 
 /* Routes End */
 
