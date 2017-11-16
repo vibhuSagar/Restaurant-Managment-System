@@ -157,6 +157,10 @@ select{
   color: green !important;
 }
 
+.alert{
+  color: white;
+  background-color: #5cb85c;
+}
 
 #footer{
   position: fixed;

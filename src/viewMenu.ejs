@@ -56,7 +56,7 @@
             </div>
 
             <div class="modal-body">
-              <form action="/menu" method="POST">
+              <form action="/order" method="POST">
                 <input type="text" class="form-field" placeholder="Customer Name" name="customer"
                  value="<%=customer%>"  readonly>
                 <div class="selectedItems">
@@ -91,21 +91,61 @@
   <script>
 
   $(document).ready(function(){
+    var items=[], price=[];
+
 
     $('.item-row').click(function(){
       var item = $(this).children()[3];
 
-      if($(item).children().hasClass('added'))
+      if($(item).children().hasClass('added')){
         $(item).children().removeClass('added')
+
+        $(this).each(function(){
+          items.splice(items.indexOf($(this).find('td').eq(1).html()), 1);
+          price.splice(price.indexOf($(this).find('td').eq(2).html()), 1);
+        })
+
+        console.log(items)
+        console.log(price)
+
+        $('.selectedItems').empty();
+        for(var i=0;i<items.length;i++)
+        $('.selectedItems').append(`
+            <div class="col-xs-6">
+              <input type="text" class="form-field" name="item${i}" value="${items[i]}"
+                readonly>
+            </div>
+            <div class="col-xs-6">
+              <input type="text" class="form-field" name="price${i}" value="${price[i]}"
+                readonly>
+            </div>
+        `)
+
+      }
       else {
         $(item).children().addClass('added')
 
-        var selectedItems = $('.added').parent().parent();
-        console.log(selectedItems)
+        $(this).each(function(){
+          items.push($(this).find('td').eq(1).html())
+          price.push($(this).find('td').eq(2).html())
+
+        })
+        console.log(items)
+        console.log(price)
+
         $('.selectedItems').empty();
-        $('.selectedItems').append(`
-            <div class="">${selectedItems}</div>
+        for(var i=0;i<items.length;i++)
+          $('.selectedItems').append(`
+              <div class="col-xs-6">
+                <input type="text" class="form-field" name="item${i}" value="${items[i]}"
+                  readonly>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-field" name="price${i}" value="${price[i]}"
+                  readonly>
+              </div>
           `)
+
       }
     })
 

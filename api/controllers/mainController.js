@@ -1,6 +1,6 @@
 
 let groupData = (obj) => {
-  var types = getDifferentTypes(obj);
+  var types = getDifferentTypes(obj, 'type');
   var data = {}
 
   for(var i=0;i<types.length;i++){
@@ -14,17 +14,33 @@ let groupData = (obj) => {
   return data;
 }
 
-let getDifferentTypes = (obj) => {
+let getDifferentTypes = (obj, type) => {
   data = []
 
   for(var i=0;i<obj.length;i++){
-    if(!data.includes(obj[i].type))
-      data.push(obj[i].type)
+    if(!data.includes(obj[i][type]))
+      data.push(obj[i][type])
   }
 
   return data
 }
 
+let getRepeatingCount = (obj) => {
+
+  var types = getDifferentTypes(obj, 'name');
+  var counts = [], count=0;
+  for(var i=0;i<types.length;i++)
+    if(obj[i].name == types[i])
+      count++;
+    else {
+      counts.push(count)
+    }
+
+  return counts
+}
+
 module.exports = {
-  groupData
+  groupData,
+  getDifferentTypes,
+  getRepeatingCount
 }

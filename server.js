@@ -49,6 +49,7 @@ app.get('/home', function(req, res){
 
   var sql = 'select * from emp;';
   sql += 'select * from customer;';
+  sql += 'select c.name, o.item from customer c, order_details o where c.cid=o.cid'
 
   vibhu.query(sql, (err, success) => {
     if(err)
@@ -57,8 +58,18 @@ app.get('/home', function(req, res){
 
       //console.log(success[0])
       //console.log(success[1])
+      var ongoing_orders = [], items=[];
 
-        res.render('home.ejs',
+      console.log(success[2])
+      var name = controller.getRepeatingCount(success[2])
+      console.log(name)
+      for(var i=0;i<success[2].length;i++)
+        items.push(success[2][i].item)
+
+      ongoing_orders.push({name: name, items: items})
+      console.log(ongoing_orders)
+
+      res.render('home.ejs',
         {
           emp: success[0],
           customer: success[1]
@@ -77,7 +88,7 @@ app.get('/menu', function(req, res){
       console.log(err)
     else{
       //console.log(success);
-      res.render("menu.ejs", {menu: controller.groupData(success)});
+      res.render("menu.ejs", {menu: controller.groupData(success), msg:''});
     }
   })
 
@@ -95,7 +106,7 @@ app.post('/menu', (req, res) => {
     if(err)
       res.send(err)
     else {
-      res.redirect('/menu')
+      res.redirect('/menu');
     }
   })
 })
@@ -163,6 +174,60 @@ app.get('/view-menu', (req, res) => {
     }
   })
 })
+
+app.post('/order', (req, res) => {
+  var customer = req.body.customer;
+
+  var query = `select distinct cid from customer where name='${customer}'`
+
+  vibhu.query(query, (err, success) => {
+    if(err)
+      res.send(err)
+    else{
+      var cid = success[0].cid;
+      var len = parseInt((Object.keys(req.body).length)/2)
+      console.log(cid)
+      names = [], price = []
+
+      for(var i=0;i<len;i++)
+        names.push(req.body['item'+i])
+
+      for(var i=0;i<len;i++)
+        price.push(req.body['price'+i])
+
+      console.log(names)
+      console.log(price)
+      sql = '';
+      for(var i=0;i<len;i++)
+        sql += `insert into order_details(cid, item, price) values (${cid}, '${names[i]}', ${price[i]});`
+
+      sql += `insert into ongoing_orders(cid) values (${cid});`
+      vibhu.query(sql, (err, success) => {
+        if(err)
+          res.send(err)
+        else {
+          res.send("Done")
+        }
+      })
+
+    }
+  })
+})
+
+app.post("/emp", function(req, res){
+  var sql =`insert into emp(name, address, phone, salary, gender) values('${req.body.emp}','${req.body.address}','${req.body.phone}', '${req.body.salary}','${req.body.gender}')`
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      res.send(err)
+    else{
+      res.redirect('/home')
+    }
+  })
+
+
+})
+
 
 /* Routes End */
 

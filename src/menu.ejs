@@ -57,8 +57,8 @@
 
             <div class="modal-body">
               <form action="/menu" method="POST">
-                <input type="text" class="form-field" placeholder="Item Name" name="item">
-                <input type="number" class="form-field" placeholder="Price" name="price">
+                <input type="text" class="form-field" placeholder="Item Name" name="item" required>
+                <input type="number" class="form-field" placeholder="Price" name="price" required>
                 <i class="fa fa-caret-down"></i>
                 <select class="form-field" name="type">
                   <option value="Indian Snacks">Indian Snacks</option>
@@ -70,7 +70,7 @@
                   <option value="Beverages">Beverages</option>
                   <option value="Deserts">Deserts</option>
                   <option value="Chinese">Chinese</option>
-                  <option value="Continetal">Continental</option>
+                  <option value="Continental">Continental</option>
                 </select>
                 <input type="submit" value="ADD">
 

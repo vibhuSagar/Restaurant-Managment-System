@@ -31,7 +31,7 @@
             <h2 class="text-center modal-title">Select Customer</h2>
           </div>
 					<div class="modal-body">
-            <form action="/view-menu">
+            <form action="/view-menu" id="view-menu">
 							<select class="form-field" name="customer">
 								<% for(var i=0;i< customer.length;i++) { %>
 									<option value=<%= customer[i].name %>><%= customer[i].name %></option>
@@ -41,7 +41,7 @@
 							<p class="text-center">
 							<button class="btn btn-success" id="findcust"> Add New Customer
 							</button></p>
-							
+
 							<input type="submit" class="form-field" value="View Menu">
             </form>
 
@@ -58,7 +58,12 @@
           <h3 class="text-center">Ongoing Orders</h3>
         </div>
         <div class="box-body">
-
+					<table class="table tables-hover">
+						<tr>
+							<th>customer Name</th>
+							<th>Item Name</th>
+						</tr>
+					</table>
         </div>
       </div>
     </div>
@@ -161,8 +166,42 @@
             <%}%>
           </table>
         </div>
+
+				<div class="box-footer">
+					<p class="text-center">
+						<button class="btn btn-success" data-toggle="modal" data-target="#modalEmp">
+							Add New Employee</button>
+					</p>
+				</div>
       </div>
     </div>
+
+
+		<!-- < Add new EmprModal> -->
+    <div class="modal fade" id="modalEmp">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-head">
+            <h2 class="text-center modal-title">Add New Employee</h2>
+          </div>
+					<div class="modal-body">
+            <form action="/emp" method="POST">
+              <input type="text" class="form-field" placeholder="Employee Name" name="emp">
+              <input type="text" class="form-field" placeholder="Address" name="address">
+              <input type="number" class="form-field" placeholder="Phone Number" name="phone">
+							<input type="number" class="form-field" placeholder="Salary" name="salary">
+							<select class="form-field" name="gender">
+								<option value="M">Male</option>
+								<option value="F">Female</option>
+							</select>
+              <input type="submit" value="Add Employee">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- </ Add New Emp Modal>-->
 
   </div>
 
@@ -180,8 +219,15 @@
 		}
 
 		$('#findcust').click(function(){
-			$('#myModal').modal('toggle');
-			$('#modalCustomer').modal('toggle');
+			$('#myModal').modal('hide');
+			$('#modalCustomer').modal('show');
+		})
+
+		$('#view-menu').submit(function(e){
+			//e.preventDefault();
+			//$(this).submit();
+			//window.location.href = '/view-menu?customer='+$('select').val()
+
 		})
 
 	</script>
