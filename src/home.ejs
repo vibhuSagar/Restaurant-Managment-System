@@ -58,11 +58,22 @@
           <h3 class="text-center">Ongoing Orders</h3>
         </div>
         <div class="box-body">
-					<table class="table tables-hover">
+					<table class="table table-hover">
 						<tr>
 							<th>customer Name</th>
 							<th>Item Name</th>
 						</tr>
+						<% for(var i=0;i< ongoing_orders.length;i++) {%>
+							<tr>
+								<td><%= ongoing_orders[i].name %></td>
+								<td>
+									<% for(var j=0;j< ongoing_orders[i].items.length; j++) { %>
+										<%= ongoing_orders[i].items[j] %><br>
+									<% } %>
+								</td>
+								<td><i class="fa fa-check" style="cursor:pointer; color:darkgrey;color:green;"></i></td>
+							</tr>
+						<% } %>
 					</table>
         </div>
       </div>
@@ -74,7 +85,22 @@
           <h3 class="text-center">Orders Completed</h3>
         </div>
         <div class="box-body">
-
+					<table class="table table-hover">
+						<tr>
+							<th>customer Name</th>
+							<th>Item Name</th>
+						</tr>
+						<% for(var i=0;i< completed_orders.length;i++) {%>
+							<tr>
+								<td><%= completed_orders[i].name %></td>
+								<td>
+									<% for(var j=0;j< completed_orders[i].items.length; j++) { %>
+										<%= completed_orders[i].items[j] %><br>
+									<% } %>
+								</td>
+							</tr>
+						<% } %>
+					</table>
         </div>
       </div>
     </div>
@@ -228,6 +254,15 @@
 			//$(this).submit();
 			//window.location.href = '/view-menu?customer='+$('select').val()
 
+		})
+
+		$('.fa-check').click(function(){
+
+			var cname  = $(this).parent().parent().find('td').eq(0).text();
+
+			$.post('/complete-order', {cname: cname}, function(success){
+				window.location.href= '/home'
+			})
 		})
 
 	</script>

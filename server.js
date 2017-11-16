@@ -49,30 +49,56 @@ app.get('/home', function(req, res){
 
   var sql = 'select * from emp;';
   sql += 'select * from customer;';
-  sql += 'select c.name, o.item from customer c, order_details o where c.cid=o.cid'
+  //sql += 'select c.name, o.item from customer c, order_details o where c.cid=o.cid'
+  sql += 'select distinct c.name,d.item from customer c,order_details d, ongoing_orders o where o.cid=d.cid and c.cid=o.cid and d.status="ongoing";'
+  sql += 'select distinct c.name,d.item from customer c,order_details d, completed_orders o where o.cid=d.cid and c.cid=o.cid and d.status="completed";'
 
   vibhu.query(sql, (err, success) => {
     if(err)
       console.log(err)
     else {
+      var ongoing_orders = [], completed_orders=[], items=[], item=[];
 
-      //console.log(success[0])
-      //console.log(success[1])
-      var ongoing_orders = [], items=[];
+      //console.log(success[2])
+      var name = controller.getDifferentTypes(success[2], 'name')
+      //console.log(name)
+      for(var i=0;i<name.length;i++){
+        item = []
+        for(var j=0;j<success[2].length;j++)
+          if(name[i] == success[2][j].name)
+            item.push(success[2][j].item)
 
-      console.log(success[2])
-      var name = controller.getRepeatingCount(success[2])
-      console.log(name)
-      for(var i=0;i<success[2].length;i++)
-        items.push(success[2][i].item)
+        items.push(item)
+      }
+      //console.log(items)
 
-      ongoing_orders.push({name: name, items: items})
-      console.log(ongoing_orders)
+      for(var i=0;i<name.length;i++)
+        ongoing_orders.push({name: name[i], items: items[i]})
+      //console.log(ongoing_orders)
+
+      var name2 = controller.getDifferentTypes(success[3], 'name')
+      var item2 = [], items2 = []
+      for(var i=0;i<name2.length;i++){
+        item2 = []
+        for(var j=0;j<success[3].length;j++)
+          if(name2[i] == success[3][j].name)
+            item2.push(success[3][j].item)
+
+        items2.push(item2)
+      }
+      //console.log(items)
+
+      for(var i=0;i<name2.length;i++)
+        completed_orders.push({name: name2[i], items: items2[i]})
+
+      console.log(completed_orders)
 
       res.render('home.ejs',
         {
           emp: success[0],
-          customer: success[1]
+          customer: success[1],
+          ongoing_orders: ongoing_orders,
+          completed_orders: completed_orders
         })
     }
   })
@@ -186,7 +212,7 @@ app.post('/order', (req, res) => {
     else{
       var cid = success[0].cid;
       var len = parseInt((Object.keys(req.body).length)/2)
-      console.log(cid)
+      //console.log(cid)
       names = [], price = []
 
       for(var i=0;i<len;i++)
@@ -195,24 +221,54 @@ app.post('/order', (req, res) => {
       for(var i=0;i<len;i++)
         price.push(req.body['price'+i])
 
-      console.log(names)
-      console.log(price)
+      //console.log(names)
+      //console.log(price)
       sql = '';
       for(var i=0;i<len;i++)
-        sql += `insert into order_details(cid, item, price) values (${cid}, '${names[i]}', ${price[i]});`
+        sql += `insert into order_details(cid, item, price, status) values (${cid}, '${names[i]}', ${price[i]}, 'ongoing');`
 
       sql += `insert into ongoing_orders(cid) values (${cid});`
       vibhu.query(sql, (err, success) => {
         if(err)
           res.send(err)
         else {
-          res.send("Done")
+          res.redirect('/home')
         }
       })
 
     }
   })
 })
+
+
+app.post('/complete-order', function(req, res){
+  var cname = req.body.cname;
+  console.log(cname)
+  var sql = `select cid from customer where name='${cname}'`
+
+  vibhu.query(sql, function(err, success){
+    if(err)
+      res.send(err)
+    else{
+      var cid = success[0].cid;
+
+      var query = `delete from ongoing_orders where cid=${cid};`;
+      query += `insert into completed_orders(cid) values (${cid});`
+      query += `update order_details set status='completed' where cid=${cid};`
+
+      vibhu.query(query, (err, success2) => {
+        if(err)
+          res.send(err)
+        else {
+          console.log(success2);
+          res.send('done')
+        }
+      })
+    }
+  })
+})
+
+
 
 app.post("/emp", function(req, res){
   var sql =`insert into emp(name, address, phone, salary, gender) values('${req.body.emp}','${req.body.address}','${req.body.phone}', '${req.body.salary}','${req.body.gender}')`
