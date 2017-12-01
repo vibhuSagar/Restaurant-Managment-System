@@ -246,8 +246,9 @@
 		}
 
 		$('#findcust').click(function(){
-			$('#myModal').modal('hide');
-			$('#modalCustomer').modal('show');
+			$('#myModal').modal('toggle');
+      $('#modalCustomer').modal('toggle');
+      return false;
 		})
 
 		$('#view-menu').submit(function(e){
