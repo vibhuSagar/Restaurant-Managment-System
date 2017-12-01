@@ -47,11 +47,7 @@ app.get('/', function(req, res){
 
 app.get('/home', function(req, res){
 
-  var sql = 'select * from emp;';
-  sql += 'select * from customer;';
-  //sql += 'select c.name, o.item from customer c, order_details o where c.cid=o.cid'
-  sql += 'select distinct c.name,d.item from customer c,order_details d, ongoing_orders o where o.cid=d.cid and c.cid=o.cid and d.status="ongoing";'
-  sql += 'select distinct c.name,d.item from customer c,order_details d, completed_orders o where o.cid=d.cid and c.cid=o.cid and d.status="completed";'
+  var sql = 'call homedata()';
 
   vibhu.query(sql, (err, success) => {
     if(err)
