@@ -18,10 +18,14 @@
   <div class="col-md-8 col-sm-10" style="margin-top: 20px; margin-bottom: 40px;">
     <div class="box-wraper">
       <div class="box-head">
+        <h2 class="text-center">Menu</h2>
+        <div class="search-wrap">
+          <i class="fa fa-search"></i>
+          <input type="text" class="form-field" placeholder="Search your favourite food">
+        </div>
         <button class="btn btn-success" id="addBtn" data-toggle="modal" data-target="#menuModal">
           <i class="fa fa-plus"></i>  Add New Item
         </button>
-        <h2 class="text-center">Menu</h2>
       </div>
       <div class="box-body" id="menubox">
         <% for( item in menu){ %>
@@ -113,7 +117,81 @@
       })
     })
 
+    $('.search-wrap input').keyup(function(){
+      var searchQuery = $(this).val()
+
+      if(searchQuery === ''){
+        console.log("deleted");
+
+        $('#menubox').empty();
+        $('#menubox').append(`<% for( item in menu){ %>
+          <h3 class="text-center"><%= item %></h3>
+          <table class="table table-hover">
+            <tr>
+              <th class="text-center">iid</th>
+              <th class="text-center">name</th>
+              <th class="text-center">price</th>
+            </tr>
+            <% for(var i=0;i < menu[item].length;i++) { %>
+              <tr>
+                <td class="text-center"><%= i+1 %></td>
+                <td class="text-center"><%= menu[item][i].name %></td>
+                <td class="text-center"><%= menu[item][i].price %></td>
+                <td> <i class="fa fa-trash" onclick="deleteItem(event)" style="color: red;font-size:22px;cursor:pointer"></i></td>
+              </tr>
+            <%}%>
+          </table>
+        <% } %>`)
+      }
+      else{
+        $.post('/searchMenu', {query: searchQuery}, function(success){
+          console.log(success);
+
+          if(success.err)
+            alert('An error Occured');
+          else{
+            $('#menubox').empty();
+            $('#menubox').append('<h3 class="text-center">Search results for "'+ searchQuery +'"</h3>')
+            $('#menubox').append(`
+              <table class="table table-hover">
+                <tr>
+                  <th class="text-center">iid</th>
+                  <th class="text-center">name</th>
+                  <th class="text-center">price</th>
+                </tr>
+              </table>
+            `);
+
+            for(var i=0;i<success.results.length;i++)
+              $('#menubox table').append(`
+                <tr>
+                  <td class="text-center">${success.results[i].iid}</td>
+                  <td class="text-center">${success.results[i].name}</td>
+                  <td class="text-center">${success.results[i].price}</td>
+                  <td> <i class="fa fa-trash" onclick="deleteItem(event)" style="color: red;font-size:22px;cursor:pointer"></i></td>
+                </tr>
+              `)
+          }
+
+        })
+      }
+
+    })
+
   })
+
+  function deleteItem(e){
+    var ele = e.target
+
+    var siblings = $(ele).parent().siblings()
+
+    var item = $(siblings[1]).text()
+
+    $.post('/delete-item', {itemName: item}, function(result){
+      console.log(result)
+      window.location.href=result
+    })
+  }
 
   </script>
 </body>
