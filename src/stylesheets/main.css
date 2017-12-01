@@ -119,9 +119,21 @@ div.login{
   padding: 10px;
 }
 
+.search-wrap input{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
+}
+
+.search-wrap i{
+  position: relative;
+  top: 35px;
+  left: 10px;
+  z-index: 10;
+}
+
 #addBtn{
-  position: absolute;
-  right: 8%;
+  width: 100%;
 }
 
 #menubox{
@@ -170,4 +182,30 @@ select{
   text-align: center;
   padding: 10px;
   font-size: 1.2em;
+}
+
+@media(min-width : 768px){
+  #addBtn{
+    position: absolute;
+    right: 8%;
+    width: auto;
+    top: 35px;
+  }
+
+  .search-wrap input{
+    width: 30%;
+    position:  absolute;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    top: 30px;
+  }
+  
+  .search-wrap i{
+    position: absolute;
+    top: 47px;
+    left: 35px;
+    z-index: 10;
+  }
+  
 }

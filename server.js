@@ -280,6 +280,20 @@ app.post("/emp", function(req, res){
 
 })
 
+//Route for searching menu
+app.post('/searchMenu', (req, res) => {
+  var query = req.body.query;
+  
+  var sql = `select * from menu where name REGEXP '^${query}'`
+
+  vibhu.query(sql, (err, success) => {
+    if(err)
+      res.send({err: err, results: null})
+    else
+      res.send({err: null, results: success})
+  })
+})
+
 
 /* Routes End */
 
